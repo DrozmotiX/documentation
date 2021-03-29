@@ -82,3 +82,12 @@ switch:
     output: 'gpio_12'
     
 ```
+
+Die Konfigurationsdateien "YAML" können auch manuell zum Dashboard hinzugefügt werden.
+
+```
+opt/iobroker/node_modules/iobroker.esphome/config/
+
+```
+
+Die Datei müssen unter diesem Pfad abgelegt werden.
