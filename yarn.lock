@@ -1144,10 +1144,10 @@
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-google-analytics/-/plugin-google-analytics-1.8.2.tgz#96cf65f1f0ecbb3bcf6b0d10089dafe2aea875bc"
   integrity sha512-BMFayLzT2BvXmnhM9mDHw0UPU7J0pH1X9gQA4HmZxOf7f3+atK5eJGsc1Ia/+1FTG2ESvhFLUU/CC3h5arjEJw==
 
-"@vuepress/plugin-html-redirect@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-html-redirect/-/plugin-html-redirect-0.1.2.tgz#ed68245a4e59ac6d314141e7bbdb56ed196cf157"
-  integrity sha512-5UIWO6+s/pAXysauYDbLAJg1Jv9eSYjRsQqVPZaLmS666R1ExPmfYiCjsD4vqju+jjlPCngJ8yB7zcHrCTqXEQ==
+"@vuepress/plugin-html-redirect@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-html-redirect/-/plugin-html-redirect-0.1.4.tgz#019a3d9ffe1af0f7421ca3b841b276a03a74b320"
+  integrity sha512-tzVquctn7Jwv/nFlsbDxqUeaJzG5H+muoOWl1O3M24XFu3KVsIoqZZt1seawrSCWWfFyLB9nVPJSoXALQ62hdg==
 
 "@vuepress/plugin-last-updated@1.8.2":
   version "1.8.2"
@@ -3684,10 +3684,10 @@ glob-to-regexp@^0.3.0:
   resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.3.0.tgz#8c5a1494d2066c570cc3bfe4496175acc4d502ab"
   integrity sha1-jFoUlNIGbFcMw7/kSWF1rMTVAqs=
 
-glob@^7.0.3, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
-  version "7.1.6"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
-  integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
+glob@^7.0.3, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@^7.1.7:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
+  integrity sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
   dependencies:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
@@ -4168,10 +4168,10 @@ infer-owner@^1.0.3:
   resolved "https://registry.yarnpkg.com/infer-owner/-/infer-owner-1.0.4.tgz#c4cefcaa8e51051c2a40ba2ce8a3d27295af9467"
   integrity sha512-IClj+Xz94+d7irH5qRyfJonOdfTzuDaifE6ZPWfx0N0+/ATZCbuTPq2prFl526urkQd90WyUKIh1DfBQ2hMz9A==
 
-inflection@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/inflection/-/inflection-1.12.0.tgz#a200935656d6f5f6bc4dc7502e1aecb703228416"
-  integrity sha1-ogCTVlbW9fa8TcdQLhrstwMihBY=
+inflection@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/inflection/-/inflection-1.13.1.tgz#c5cadd80888a90cf84c2e96e340d7edc85d5f0cb"
+  integrity sha512-dldYtl2WlN0QDkIDtg8+xFwOS2Tbmp12t1cHa5/YClU6ZQjTFm7B66UcVbh9NQB+HvT5BAd2t5+yKsBkw5pcqA==
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -4949,10 +4949,10 @@ markdown-it-table-of-contents@^0.4.0:
   resolved "https://registry.yarnpkg.com/markdown-it-table-of-contents/-/markdown-it-table-of-contents-0.4.4.tgz#3dc7ce8b8fc17e5981c77cc398d1782319f37fbc"
   integrity sha512-TAIHTHPwa9+ltKvKPWulm/beozQU41Ab+FIefRaQV1NRnpzwcV9QOe6wXQS5WLivm5Q/nlo0rl6laGkMDZE7Gw==
 
-markdown-it@^12.0.4:
-  version "12.0.4"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.0.4.tgz#eec8247d296327eac3ba9746bdeec9cfcc751e33"
-  integrity sha512-34RwOXZT8kyuOJy25oJNJoulO8L0bTHYWXcdZBYZqFnjIy3NgjeoM3FmPXIOFQ26/lSHYMr8oc62B6adxXcb3Q==
+markdown-it@^12.0.6:
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.2.0.tgz#091f720fd5db206f80de7a8d1f1a7035fd0d38db"
+  integrity sha512-Wjws+uCrVQRqOoJvze4HCqkKl1AsSh95iFAeQDwnyfxM09divCBSXlDR1uTvyUP3Grzpn4Ru8GeCxYPM8vkCQg==
   dependencies:
     argparse "^2.0.1"
     entities "~2.1.0"
@@ -7725,16 +7725,16 @@ vue@^2.6.10:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
 
-vuepress-bar@^0.3.6:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/vuepress-bar/-/vuepress-bar-0.3.6.tgz#8b9207f6fa0e8ae7e88bdfba43c6dd6e61619b73"
-  integrity sha512-IUheBfJZieX0KTkahds1jYjNx8aXswbdUViA6l0CaIOtqqQ8fDcX4ylBBUz5bGGgsN+PhzngqeetEeYBPDVfMA==
+vuepress-bar@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/vuepress-bar/-/vuepress-bar-0.4.4.tgz#acf93ae3fc246cd24e1a5a50f1e63c78ba3dd6ec"
+  integrity sha512-fl2NjobRXPn4Ix7AFj5Yd0WNbFDd4Ao+IIgX7R21fYWhbGSmHhPWDVaWpLRZg47yfru9OQoErThEPHcJidS7Mw==
   dependencies:
-    glob "^7.1.6"
-    inflection "^1.12.0"
+    glob "^7.1.7"
+    inflection "^1.13.1"
     lodash.escaperegexp "^4.1.2"
     lodash.sortby "^4.7.0"
-    markdown-it "^12.0.4"
+    markdown-it "^12.0.6"
     markdown-it-meta "0.0.1"
     parent-module "^2.0.0"
     transliteration "^2.1.8"
