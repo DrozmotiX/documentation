@@ -18,7 +18,7 @@
     "@vuepress/plugin-google-analytics": "^1.8.2",
     "@vuepress/plugin-html-redirect": "^0.1.4",
     "@vuepress/plugin-medium-zoom": "^1.8.2",
-    "vuepress": "^1.8.2",
+    "vuepress": "^1.9.8",
     "vuepress-plugin-code-copy": "^1.0.6"
   },
   "scripts": {
