@@ -10,7 +10,7 @@
   "repository": "https://github.com/DrozmotiX/DrozmotiX.github.io/DrozmotiX_Project_Space",
   "license": "MIT",
   "dependencies": {
-    "vuepress-bar": "^0.3.6",
+    "vuepress-bar": "^0.4.5",
     "vuepress-plugin-code-copy": "^1.0.6"
   },
   "devDependencies": {
