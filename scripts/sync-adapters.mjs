@@ -10,12 +10,13 @@
 //   - Zahlen-Präfixe fallen aus Ordnern/Dateien weg und werden zu `order` im Frontmatter (Sidebar-Reihenfolge)
 //   - README.md wird index.md, relative Links werden passend umgeschrieben
 //   - Frontmatter bekommt `editLink` auf die Originaldatei im Adapter-Repo
+//   - Platzhalter wie <Einheit> außerhalb von Code werden als Text maskiert (sonst bricht der Vue-Build ab)
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { normalizeRelPath, orderOf, rewriteLinks, withFrontmatter } from './lib/normalize.mjs';
+import { escapeStrayTags, normalizeRelPath, orderOf, rewriteLinks, rewriteUrl, withFrontmatter } from './lib/normalize.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cfg = JSON.parse(fs.readFileSync(path.join(root, 'adapters.config.json'), 'utf8'));
@@ -55,6 +56,29 @@ function fetchSource(a) {
     }
 }
 
+/**
+ * Links, die den Sprachordner verlassen: in eine andere Sprache -> deren Seite auf dieser Website,
+ * aus docs/ heraus (README, Code …) -> Datei auf GitHub. Alles andere: normale Umschreibung.
+ */
+function resolveLink(a, fromDir, url) {
+    const [, p, rest] = /^([^#?]*)(.*)$/.exec(url);
+    if (!p) return undefined;
+    const target = path.posix.normalize(path.posix.join(fromDir, p)); // relativ zur Repo-Wurzel
+    const docsPrefix = `${a.docsDir}/`;
+    const lang = cfg.languages.find(l => target === `${docsPrefix}${l}` || target.startsWith(`${docsPrefix}${l}/`));
+    if (lang) {
+        if (fromDir === `${docsPrefix}${lang}` || fromDir.startsWith(`${docsPrefix}${lang}/`)) return undefined; // gleiche Sprache
+        const inner = target.slice(`${docsPrefix}${lang}`.length).replace(/^\//, '');
+        const site = `${lang === 'en' ? '/' : `/${lang}/`}adapter/${a.id}/`;
+        return site + rewriteUrl(inner || './').replace(/^\.\//, '') + rest;
+    }
+    if (!target.startsWith(docsPrefix)) {
+        const kind = p.endsWith('/') ? 'tree' : 'blob';
+        return `https://github.com/${a.repo}/${kind}/${a.branch}/${target.replace(/^\.\/?/, '')}${rest}`;
+    }
+    return undefined;
+}
+
 function copyTree(a, srcDir, destDir, editBase, dirOrder) {
     let pages = 0;
     for (const e of fs.readdirSync(srcDir, { withFileTypes: true })) {
@@ -69,7 +93,8 @@ function copyTree(a, srcDir, destDir, editBase, dirOrder) {
             fs.copyFileSync(src, dest);
             continue;
         }
-        let md = rewriteLinks(fs.readFileSync(src, 'utf8'));
+        const fromDir = path.posix.dirname(`${editBase}/${e.name}`); // z. B. docs/de/01.erste-schritte
+        let md = escapeStrayTags(rewriteLinks(fs.readFileSync(src, 'utf8'), url => resolveLink(a, fromDir, url)));
         md = withFrontmatter(md, {
             // Inhaltsseite eines Ordners übernimmt dessen Präfix (01.erste-schritte/README.md -> order 1)
             order: /^readme\.md$/i.test(e.name) ? dirOrder : orderOf(e.name),

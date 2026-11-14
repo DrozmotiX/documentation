@@ -26,9 +26,15 @@ export function normalizeRelPath(rel) {
 
 const isRelative = url => url && !/^([a-z][a-z0-9+.-]*:|\/\/|\/|#|mailto:)/i.test(url);
 
-/** Relativen Link umschreiben; externe Links, absolute Pfade und Anker bleiben unverändert. */
-export function rewriteUrl(url) {
+/**
+ * Relativen Link umschreiben; externe Links, absolute Pfade und Anker bleiben unverändert.
+ * `resolve(url)` darf einen Link selbst abbilden (z. B. auf eine andere Sprache oder nach GitHub);
+ * gibt er undefined zurück, gilt die normale Umschreibung.
+ */
+export function rewriteUrl(url, resolve) {
     if (!isRelative(url)) return url;
+    const custom = resolve?.(url);
+    if (custom !== undefined) return custom;
     const m = /^([^#?]*)(.*)$/.exec(url);
     let p = normalizeRelPath(m[1]);
     // ".../index.md" -> ".../" damit Links auf Inhaltsseiten sauber aussehen
@@ -37,15 +43,15 @@ export function rewriteUrl(url) {
 }
 
 /** Alle Markdown- und HTML-Links/Bilder in einem Dokument umschreiben (Codeblöcke bleiben unberührt). */
-export function rewriteLinks(md) {
+export function rewriteLinks(md, resolve) {
     const parts = md.split(/(^```[\s\S]*?^```|^~~~[\s\S]*?^~~~)/m);
     return parts
         .map((chunk, i) => {
             if (i % 2 === 1) return chunk; // Codeblock
             return chunk
-                .replace(/(\]\()(<?)([^)\s>]+)(>?)/g, (_, a, lt, url, gt) => a + lt + rewriteUrl(url) + gt)
-                .replace(/^(\[[^\]]+\]:\s*)(\S+)/gm, (_, a, url) => a + rewriteUrl(url))
-                .replace(/(\s(?:src|href)=["'])([^"']+)(["'])/g, (_, a, url, b) => a + rewriteUrl(url) + b);
+                .replace(/(\]\()(<?)([^)\s>]+)(>?)/g, (_, a, lt, url, gt) => a + lt + rewriteUrl(url, resolve) + gt)
+                .replace(/^(\[[^\]]+\]:\s*)(\S+)/gm, (_, a, url) => a + rewriteUrl(url, resolve))
+                .replace(/(\s(?:src|href)=["'])([^"']+)(["'])/g, (_, a, url, b) => a + rewriteUrl(url, resolve) + b);
         })
         .join('');
 }
@@ -69,4 +75,34 @@ export function withFrontmatter(md, fields) {
     }
     if (!lines.length) return body;
     return `---\n${lines.join('\n')}\n---\n\n${body.replace(/^\s+/, '')}`;
+}
+
+// Echte HTML-Elemente, die in Markdown vorkommen dürfen. Alles andere in spitzen Klammern
+// (z. B. „Impulse pro <Einheit>“) ist Platzhaltertext: GitHub blendet so etwas aus, VitePress bricht
+// den Build ab (Vue hält es für ein offenes Element). Darum wird es als Text maskiert.
+const HTML_TAGS = new Set(
+    ('a abbr b bdi bdo blockquote br caption center cite code col colgroup dd del details dfn div dl dt em ' +
+        'figcaption figure font h1 h2 h3 h4 h5 h6 hr i img ins kbd li mark ol p picture pre q rp rt ruby s samp ' +
+        'small source span strike strong sub summary sup table tbody td tfoot th thead time tr tt u ul var video wbr')
+        .split(' '),
+);
+
+/** Platzhalter wie <Einheit> außerhalb von Code und Kommentaren als Text maskieren. */
+export function escapeStrayTags(md) {
+    return md
+        .split(/(^```[\s\S]*?^```|^~~~[\s\S]*?^~~~|<!--[\s\S]*?-->)/m)
+        .map((chunk, i) => {
+            if (i % 2 === 1) return chunk;
+            return chunk
+                .split(/(`+[^`]*?`+)/)
+                .map((part, j) =>
+                    j % 2 === 1
+                        ? part
+                        : part.replace(/<(\/?)([^\s<>/!]+)([^<>]*)>/g, (m, slash, name, rest) =>
+                              HTML_TAGS.has(name.toLowerCase()) ? m : `&lt;${slash}${name}${rest}&gt;`,
+                          ),
+                )
+                .join('');
+        })
+        .join('');
 }
