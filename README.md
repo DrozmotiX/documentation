@@ -9,7 +9,7 @@ The site is built with [VitePress](https://vitepress.dev). It combines two kinds
 
 | Content | Where it lives | Edit it in |
 |---|---|---|
-| Overview, "My Setup", older adapter pages (ESPHome, Tado, Klipper-Moonraker) | `docs/` (English) and `docs/de/` (German) in this repository | this repository |
+| Overview and adapter pages not yet moved to their repository (ESPHome, Tado, Klipper-Moonraker) | `docs/` (English) and `docs/de/` (German) in this repository | this repository |
 | Adapter documentation for **SourceAnalytix** and **WLED** | `docs/<lang>/` in each adapter repository | the adapter repository |
 
 Adapter documentation is **never copied by hand**. On every build, `scripts/sync-adapters.mjs` fetches `docs/de` and `docs/en`
@@ -23,6 +23,8 @@ During the sync, files are mapped to clean URLs:
 - "Edit this page" links point to the original file in the adapter repository
 
 So adapter docs should use plain GitHub Markdown (GitHub alerts like `> [!NOTE]`, relative links to `.md` files, numbered folders with a `README.md`), which then looks the same on GitHub and on this site.
+
+The "My Setup" pages are kept in `docs/setup/` but excluded from the build (`srcExclude` in `docs/.vitepress/config.mts`) until they are rewritten for the planned Docker setup.
 
 Sidebar and the "Adapter" menu are generated from the folder structure (`docs/.vitepress/sidebar.mts`).
 Old VuePress URLs (`/languages/<lang>/...`) redirect to the new pages via [`redirects.json`](redirects.json).

@@ -10,6 +10,11 @@ export default defineConfig({
   // Platzhalter "ToDo"-Seiten und Adapter-Dokus enthalten noch Links, die erst später Ziele bekommen.
   ignoreDeadLinks: 'localhostLinks',
 
+  // "Mein Setup" ist vorerst ausgeblendet: wird später auf ein eigenes Docker-Konzept umgebaut.
+  // Die Seiten bleiben in docs/setup und docs/de/setup liegen; zum Einblenden diese Zeile entfernen
+  // und die Nav-Einträge "My Setup"/"Mein Setup" sowie die Sidebar in sidebar.mts wieder aktivieren.
+  srcExclude: ['setup/**', 'de/setup/**'],
+
   head: [['meta', { name: 'theme-color', content: '#3eaf7c' }]],
 
   markdown: {
@@ -25,7 +30,6 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Overview', link: '/overview/' },
-          { text: 'My Setup', link: '/setup/' },
           { text: 'Adapter', items: [{ text: 'All adapters', link: '/adapter/' }, ...adapterNav('en')] },
           { text: 'Support me', link: 'https://paypal.me/DutchmanNL' },
         ],
@@ -41,7 +45,6 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Übersicht', link: '/de/overview/' },
-          { text: 'Mein Setup', link: '/de/setup/' },
           { text: 'Adapter', items: [{ text: 'Alle Adapter', link: '/de/adapter/' }, ...adapterNav('de')] },
           { text: 'Unterstütze mich', link: 'https://paypal.me/DutchmanNL' },
         ],

@@ -77,7 +77,7 @@ export function sidebarFor(lang: string): DefaultTheme.SidebarMulti {
   const base = lang === 'en' ? '/' : `/${lang}/`
   return {
     [`${base}overview/`]: section(lang, 'overview'),
-    [`${base}setup/`]: section(lang, 'setup'),
+    // [`${base}setup/`]: section(lang, 'setup'),  // ausgeblendet, siehe srcExclude in config.mts
     [`${base}adapter/`]: section(lang, 'adapter', true),
   }
 }
