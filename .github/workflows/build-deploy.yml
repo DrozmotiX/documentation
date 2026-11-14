@@ -55,10 +55,10 @@ jobs:
         with:
           deploy_key: ${{ secrets.PAGES_DEPLOY_KEY }}
           external_repository: DrozmotiX/DrozmotiX.github.io
-          # Branch, aus dem GitHub Pages im github.io-Repo veröffentlicht – bitte prüfen
-          publish_branch: master
+          # GitHub Pages veröffentlicht im github.io-Repo aus `main`.
+          # Ohne force_orphan bleibt die bisherige Historie dort erhalten; jeder Deploy ist ein neuer Commit.
+          publish_branch: main
           publish_dir: dist
-          force_orphan: true
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
           commit_message: 'deploy: ${{ github.sha }}'
