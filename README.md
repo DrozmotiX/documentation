@@ -1,42 +1,60 @@
 # DrozmotiX-OSS | OpenSource support for SmartHome Solutions
 
-We love to share and hope this site will help you find your way in realising your personal Smart Home Solution',
+We love to share and hope this site will help you find your way in realising your personal Smart Home solution.
+The site is published at [https://drozmotix.github.io](https://drozmotix.github.io).
 
-## What is the purpose
+## How it works
 
-As OpenSource community we like to share our efforts, DrozmotiX develops and maintains several ioBroker-Adapters and here you can find all related documentation how to use them and some additional basic guidance for ioBroker Setup.
+The site is built with [VitePress](https://vitepress.dev). It combines two kinds of content:
 
-## How does it work
+| Content | Where it lives | Edit it in |
+|---|---|---|
+| Overview, "My Setup", older adapter pages (ESPHome, Tado, Klipper-Moonraker) | `docs/` (English) and `docs/de/` (German) in this repository | this repository |
+| Adapter documentation for **SourceAnalytix** and **WLED** | `docs/<lang>/` in each adapter repository | the adapter repository |
 
-We created a basic Documentation Page based on Vuepress with some additional logic to handle translations and navigations structures efficient.
-Files are editable in MarkDown at our [Documentation Repository](https://github.com/DrozmotiX/documentation/) and published to the [git.io page repository](https://github.com/DrozmotiX/DrozmotiX.github.io)
+Adapter documentation is **never copied by hand**. On every build, `scripts/sync-adapters.mjs` fetches `docs/de` and `docs/en`
+from the repositories listed in [`adapters.config.json`](adapters.config.json) and places them under `docs/[de/]adapter/<id>/`.
+These folders are git-ignored. While an adapter has no docs yet, a short placeholder page is generated instead.
 
-If you would like to adopt this setup, please feel free to copy the structure and have a look at the [config_Template.js](https://github.com/DrozmotiX/documentation/blob/main/src/.vuepress/config_Template.js) to understand how this site is configured.   
-All main settings are handled in this file (you must rename it to config.js) including automated SideBar creation for each language.
+During the sync, files are mapped to clean URLs:
 
-## Where can I find the generated pages
+- number prefixes are dropped and become the sidebar order (`01.erste-schritte/02.erster-zaehler.md` → `/de/adapter/sourceanalytix/erste-schritte/erster-zaehler`)
+- `README.md` becomes the folder's start page, relative links are rewritten to match
+- "Edit this page" links point to the original file in the adapter repository
 
-The DrozmotiX-OSS docu page is published at [https://drozmotix.github.io](http://drozmotix.github.io)
+So adapter docs should use plain GitHub Markdown (GitHub alerts like `> [!NOTE]`, relative links to `.md` files, numbered folders with a `README.md`), which then looks the same on GitHub and on this site.
+
+Sidebar and the "Adapter" menu are generated from the folder structure (`docs/.vitepress/sidebar.mts`).
+Old VuePress URLs (`/languages/<lang>/...`) redirect to the new pages via [`redirects.json`](redirects.json).
+
+## Local development
+
+```bash
+npm install
+npm run dev          # uses the adapter repos next to this folder (../ioBroker.sourceanalytix, ../ioBroker.wled)
+npm run dev:remote   # fetches adapter docs from GitHub instead
+npm run build        # production build into docs/.vitepress/dist
+```
+
+To preview another branch of an adapter: `ADAPTER_REF_WLED=my-branch npm run dev:remote`.
+
+## Adding an adapter
+
+1. Add an entry to [`adapters.config.json`](adapters.config.json) (`id`, `name`, `repo`, `branch`, `localPath`).
+2. Add its generated folders to `.gitignore`.
+3. Optional: copy [`.github/adapter-docs-trigger.example.yml`](.github/adapter-docs-trigger.example.yml) into the adapter repo so a change in its `docs/` rebuilds this site right away (otherwise the nightly build picks it up).
+
+## Deployment
+
+[`.github/workflows/build-deploy.yml`](.github/workflows/build-deploy.yml) builds on every push to `main`, on demand, nightly and when an adapter repository signals a docs change, and pushes the result to [DrozmotiX/DrozmotiX.github.io](https://github.com/DrozmotiX/DrozmotiX.github.io). It needs a deploy key as secret `PAGES_DEPLOY_KEY` (setup steps are in the workflow file).
 
 ## Contributing
 
-Option 1) Directly in github/webbrowser  
-    At every page, you find a link at the bottom left "You can help us by editing this page hier", **hit it** !  
-    You will be redirected to github and the file you where just looking at, please feel free to make changes and provide a PR request
+Every page has an "edit this page" link at the bottom. For pages coming from an adapter, the link opens the file in that adapter's repository.
+For larger changes, fork this repository (or the adapter repository) and open a pull request. If you can, provide your changes in EN & DE; if not, we still welcome your PR and will handle the translation.
 
-Option 2) Forking the repository  
-    For larger changes, or if you prefer this option, feel free to fork the [Documentation Repository](https://github.com/DrozmotiX/documentation/) and make your chances.
-
-**We would be very happy to receive pull request keeping the documentation up-to-date and solve misunderstandings !**
-
-### Structure
-
-Documentation root is based on language locals, so your starting point should be here [languagesFolder](https://github.com/DrozmotiX/documentation/tree/main/src/languages)
-Each adapter/main section has his own directory with sub-files. If you are able to, please provide your changes in EN & DE.  
-If not, don't worry we still would like to have your PR and will manage the translation anyway :-)
-
-If you would like to support this OSS-Project in another way, we accept donations to buy products supporting our development activities  
-[![Donate](https://raw.githubusercontent.com/DrozmotiX/ioBroker.sourceanalytix/master/admin/button.png)](http://paypal.me/DutchmanNL)   
+If you would like to support this OSS project in another way, we accept donations to buy products supporting our development activities  
+[![Donate](https://raw.githubusercontent.com/DrozmotiX/ioBroker.sourceanalytix/master/admin/button.png)](http://paypal.me/DutchmanNL)
 
 ## Code of Conduct
 

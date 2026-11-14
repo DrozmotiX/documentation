@@ -1,28 +1,25 @@
 {
-  "name": "DrozmotiX_Project_Space",
-  "version": "0.0.1",
-  "description": "Documentation for ioBroker adapters managed and Maintained by DrozmotiX",
-  "main": "index.js",
-  "authors": {
-    "name": "Rafal Drozda",
-    "email": "rdrozda96@gmail.com"
-  },
-  "repository": "https://github.com/DrozmotiX/DrozmotiX.github.io/DrozmotiX_Project_Space",
+  "name": "drozmotix-documentation",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Documentation for ioBroker adapters managed and maintained by DrozmotiX",
+  "author": "Rafal Drozda",
   "license": "MIT",
-  "dependencies": {
-    "vuepress-bar": "^0.3.6",
-    "vuepress-plugin-code-copy": "^1.0.6"
-  },
-  "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.8.2",
-    "@vuepress/plugin-google-analytics": "^1.8.2",
-    "@vuepress/plugin-html-redirect": "^0.1.4",
-    "@vuepress/plugin-medium-zoom": "^1.8.2",
-    "vuepress": "^1.8.2",
-    "vuepress-plugin-code-copy": "^1.0.6"
+  "repository": "https://github.com/DrozmotiX/documentation",
+  "engines": {
+    "node": ">=20"
   },
   "scripts": {
-    "dev": "vuepress dev src --temp .temp",
-    "build": "vuepress build src"
+    "sync": "node scripts/sync-adapters.mjs",
+    "sync:local": "node scripts/sync-adapters.mjs --local",
+    "dev": "npm run sync:local && vitepress dev docs",
+    "dev:remote": "npm run sync && vitepress dev docs",
+    "build": "npm run sync && vitepress build docs",
+    "build:local": "npm run sync:local && vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4"
   }
 }

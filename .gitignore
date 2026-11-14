@@ -1,14 +1,15 @@
-pids
-logs
-node_modules
-npm-debug.log
-coverage/
-run
-dist
+node_modules/
 .DS_Store
-.nyc_output
-.basement
-config.local.js
-basement_dist
-.temp/
-src/.vuepress/config.js
+.idea/
+.transfer/
+
+# VitePress
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
+# Aus den Adapter-Repos synchronisiert (npm run sync) – nie von Hand bearbeiten
+docs/.vitepress/generated/
+docs/adapter/sourceanalytix/
+docs/adapter/wled/
+docs/de/adapter/sourceanalytix/
+docs/de/adapter/wled/

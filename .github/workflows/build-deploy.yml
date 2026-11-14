@@ -1,0 +1,61 @@
+# Baut die Seite und veröffentlicht sie im Repo DrozmotiX/DrozmotiX.github.io.
+# Die Adapter-Dokus werden bei jedem Build frisch aus den Adapter-Repos geholt (npm run build -> sync).
+#
+# Einmalig einrichten:
+#   1. Deploy-Key erzeugen:  ssh-keygen -t ed25519 -C docs-deploy -f docs-deploy -N ""
+#   2. docs-deploy.pub  -> DrozmotiX/DrozmotiX.github.io › Settings › Deploy keys (mit Schreibrecht)
+#   3. docs-deploy      -> DrozmotiX/documentation › Settings › Secrets › Actions als PAGES_DEPLOY_KEY
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  # Adapter-Repos stoßen einen neuen Build an, wenn sich ihre docs/ ändern (siehe docs/../README.md)
+  repository_dispatch:
+    types: [adapter-docs-updated]
+  # Sicherheitsnetz: jede Nacht neu bauen
+  schedule:
+    - cron: '17 3 * * *'
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.PAGES_DEPLOY_KEY }}
+          external_repository: DrozmotiX/DrozmotiX.github.io
+          # Branch, aus dem GitHub Pages im github.io-Repo veröffentlicht – bitte prüfen
+          publish_branch: master
+          publish_dir: dist
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: 'deploy: ${{ github.sha }}'
