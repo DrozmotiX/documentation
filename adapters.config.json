@@ -1,0 +1,30 @@
+{
+  "$comment": "Adapter, deren Doku beim Build aus dem jeweiligen Repo geholt wird (docs/<lang>/). Lokale Adapter-Seiten (ESPHome, Tado, Klipper) liegen direkt unter docs/adapter/.",
+  "languages": ["de", "en"],
+  "adapters": [
+    {
+      "id": "sourceanalytix",
+      "name": "SourceAnalytix",
+      "repo": "DrozmotiX/ioBroker.sourceanalytix",
+      "branch": "main",
+      "docsDir": "docs",
+      "localPath": "../ioBroker.sourceanalytix",
+      "description": {
+        "de": "Verbrauch, Lieferung und Kosten aus Zähler- und Leistungswerten",
+        "en": "Consumption, delivery and costs from meter and power values"
+      }
+    },
+    {
+      "id": "wled",
+      "name": "WLED",
+      "repo": "DrozmotiX/ioBroker.wled",
+      "branch": "main",
+      "docsDir": "docs",
+      "localPath": "../ioBroker.wled",
+      "description": {
+        "de": "WLED-Controller für LED-Streifen steuern",
+        "en": "Control WLED LED controllers"
+      }
+    }
+  ]
+}
