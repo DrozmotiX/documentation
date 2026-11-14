@@ -10,3 +10,31 @@
   --vp-c-brand-2: #4fc08d;
   --vp-c-brand-3: #3eaf7c;
 }
+
+/* Startseite: Hero ohne Bild mittig ausrichten (wie früher bei VuePress) */
+.VPHero:not(.has-image) .container,
+.VPHero:not(.has-image) .main {
+  margin: 0 auto;
+  text-align: center;
+}
+.VPHero:not(.has-image) .heading {
+  align-items: center;
+}
+.VPHero:not(.has-image) .name,
+.VPHero:not(.has-image) .text,
+.VPHero:not(.has-image) .tagline {
+  margin-left: auto;
+  margin-right: auto;
+}
+.VPHero:not(.has-image) .actions {
+  justify-content: center;
+}
+
+/* Badges (shields.io, iobroker.live …) nebeneinander statt untereinander.
+   VitePress setzt Bilder auf display:block; Bilder in Absätzen/Links bleiben inline. */
+.vp-doc p img,
+.vp-doc p a img {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 2px 4px 2px 0;
+}
