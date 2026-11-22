@@ -25,6 +25,18 @@
         "de": "WLED-Controller für LED-Streifen steuern",
         "en": "Control WLED LED controllers"
       }
+    },
+    {
+      "id": "esphome",
+      "name": "ESPHome",
+      "repo": "DrozmotiX/ioBroker.esphome",
+      "branch": "main",
+      "docsDir": "docs",
+      "localPath": "../ioBroker.esphome",
+      "description": {
+        "de": "Control your ESP8266/ESP32 with simple yet powerful configuration files created and managed by ESPHome",
+        "en": "Control your ESP8266/ESP32 with simple yet powerful configuration files created and managed by ESPHome"
+      }
     }
   ]
 }
