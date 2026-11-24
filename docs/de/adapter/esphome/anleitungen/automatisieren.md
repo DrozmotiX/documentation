@@ -22,7 +22,7 @@ editLink: "https://github.com/DrozmotiX/ioBroker.esphome/edit/main/docs/de/02.an
 ## Wie verwende ich ESPHome-Datenpunkte in Aliasen, Alexa oder dem IoT-Adapter?
 
 <!-- abschnitt: prio=B; gewicht=3; readme=missing; cluster=entities-scripts-15; features=entity-number,state-roles-metadata -->
-<!-- muss beantworten: Alias mit Umrechnung (z. B. 0 bis 100) und Rollen; die Adapter-Rollen sind überwiegend generisch. -->
+<!-- muss beantworten: Alias mit passenden Rollen; die Adapter-Rollen sind überwiegend generisch, Cover-Position ist schon 0 bis 100. -->
 
 *Dieser Abschnitt wird noch geschrieben.*
 
@@ -33,7 +33,60 @@ editLink: "https://github.com/DrozmotiX/ioBroker.esphome/edit/main/docs/de/02.an
 <!-- abschnitt: prio=A; gewicht=12; readme=missing; cluster=entities-scripts-16; features=entity-text,entity-number,entity-switch -->
 <!-- muss beantworten: Text- und Number-Entitäten der YAML anlegen, Datenpunkt beschreiben, Display liest die Entität. -->
 
-*Dieser Abschnitt wird noch geschrieben.*
+Leg in der YAML eine Text-Entität (`text:`) für Texte und eine Number-Entität (`number:`) für Zahlen an und gib sie im Display-Lambda aus. In ioBroker schreibst du `esphome.0.<Gerät>.Text.<Schlüssel>.state` oder `esphome.0.<Gerät>.Number.<Schlüssel>.state`, der Adapter schickt den Wert an das Gerät.
+<!-- quelle: code=src/main.ts:768-775@v2.0.0-beta.2; code=src/main.ts:1799-1810@v2.0.0-beta.2; issue=#103; issue=#141 -->
+
+Nimm für Texte eine Text-Entität, keinen Text-Sensor (`text_sensor:`). Dessen Datenpunkt lässt sich zwar beschreiben, der Wert geht aber nicht an das Gerät.
+<!-- quelle: code=src/main.ts:760-762@v2.0.0-beta.2; code=src/main.ts:1700-1860@v2.0.0-beta.2 -->
+
+### So gehst du vor
+
+1. Ergänze die YAML um eine Text- und bei Bedarf eine Number-Entität, beide mit `optimistic: true` und einer `id`.
+2. Gib die Werte im `lambda` deines Displays aus.
+3. Spiel die Firmware auf und warte, bis sich der Adapter neu verbunden hat. Unter `esphome.0.<Gerät>.Text` und `esphome.0.<Gerät>.Number` erscheinen die neuen Entitäten.
+4. Schreib deinen Text in `Text.<Schlüssel>.state` oder deine Zahl in `Number.<Schlüssel>.state`. Das Display zeigt den Wert beim nächsten Neuzeichnen.
+<!-- quelle: code=src/main.ts:768-775@v2.0.0-beta.2; code=src/main.ts:1799-1810@v2.0.0-beta.2; extern=esphome.io/components/text/template; extern=esphome.io/components/number/template -->
+
+```yaml
+text:
+  - platform: template
+    name: "Display Text"
+    id: display_text
+    optimistic: true
+    mode: text
+    max_length: 64
+
+number:
+  - platform: template
+    name: "Display Wert"
+    id: display_wert
+    optimistic: true
+    min_value: -50
+    max_value: 100
+    step: 0.1
+
+display:
+  - platform: <deine Display-Plattform>
+    lambda: |-
+      it.printf(0, 0, id(meine_schrift), "%s", id(display_text).state.c_str());
+      it.printf(0, 20, id(meine_schrift), "%.1f", id(display_wert).state);
+```
+<!-- quelle: extern=esphome.io/components/text/template; extern=esphome.io/components/number/template; extern=esphome.io/components/display -->
+
+<!-- bild: Objektbaum mit Text.<Schlüssel>.state und Number.<Schlüssel>.state eines Display-Geräts -->
+
+Den Wert eines anderen Adapters, z. B. eine Temperatur, kopierst du per Skript in den ESPHome-Datenpunkt. Die Länge eines Textes prüft der Adapter nicht, halte dich an `max_length` aus der YAML.
+<!-- quelle: code=src/main.ts:1806-1810@v2.0.0-beta.2; forum=632606 -->
+
+```javascript
+on({ id: '<Adapter>.0.<Sensor>.TEMPERATURE', change: 'ne' }, obj => {
+    setState('esphome.0.<Gerät>.Number.<Schlüssel>.state', obj.state.val);
+});
+setState('esphome.0.<Gerät>.Text.<Schlüssel>.state', 'Müll: Dienstag');
+```
+<!-- quelle: code=src/main.ts:1799-1810@v2.0.0-beta.2; forum=632606 -->
+
+**Siehe auch:** [Number sehen und schreiben](../referenz/zahlen-auswahl-tasten-sensoren.md#see-write-esphome-number-template) · [Warum im Pfad eine Zahl steht](../referenz/datenpunkte.md#datapoint-path-contain-number-instead) · [Wann ein Befehl als bestätigt gilt](../referenz/datenpunkte.md#command-acknowledged-ack-happens-offline)
 
 <a id="control-servo-output-esphome-device"></a>
 
@@ -58,6 +111,6 @@ editLink: "https://github.com/DrozmotiX/ioBroker.esphome/edit/main/docs/de/02.an
 ## Wie nutze ich bei einer RGBW-Lampe den Weißkanal automatisch?
 
 <!-- abschnitt: prio=B; gewicht=2; readme=covered; cluster=entities-scripts-07; features=light-rgb-auto-white,entity-light -->
-<!-- muss beantworten: rgbAutoWhite im config-Kanal; verschwindet, wenn "Konfiguration als Datenpunkte" aus ist. -->
+<!-- muss beantworten: rgbAutoWhite im config-Kanal; verschwindet, wenn "Konfigurationszustände anzeigen" aus ist. -->
 
 *Dieser Abschnitt wird noch geschrieben.*

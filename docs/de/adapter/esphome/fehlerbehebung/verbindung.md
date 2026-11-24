@@ -13,7 +13,7 @@ editLink: "https://github.com/DrozmotiX/ioBroker.esphome/edit/main/docs/de/04.fe
 ## Warum sind nach Neustart oder Update alle Geräte offline oder melden "incorrect password"?
 
 <!-- abschnitt: prio=B; gewicht=6; readme=missing; cluster=connection-setup-07; features=device-startup-reconnect,device-credentials-storage,info-device-online -->
-<!-- muss beantworten: Alter Fehler vor 0.5; Adapter aktualisieren, Zugangsdaten pro Gerät prüfen. -->
+<!-- muss beantworten: Status API password incorrect, Zugangsdaten im Reiter Geräte über Verbindungseinstellungen ändern prüfen. -->
 
 *Dieser Abschnitt wird noch geschrieben.*
 
@@ -22,7 +22,7 @@ editLink: "https://github.com/DrozmotiX/ioBroker.esphome/edit/main/docs/de/04.fe
 ## Warum trennt sich das Gerät nach ESPHome 2025.10 alle paar Sekunden?
 
 <!-- abschnitt: prio=B; gewicht=3; readme=missing; cluster=connection-setup-09; features=connection-behavior-settings,dashboard-version-select,logging-connection-errors -->
-<!-- muss beantworten: Fehler früherer Adapterversionen; aktualisieren. -->
+<!-- muss beantworten: Ping-Einstellungen und WLAN prüfen; was im Log steht. -->
 
 *Dieser Abschnitt wird noch geschrieben.*
 
@@ -31,6 +31,6 @@ editLink: "https://github.com/DrozmotiX/ioBroker.esphome/edit/main/docs/de/04.fe
 ## Warum gibt es ein Gerät "Initialisation needed" im Objektbaum?
 
 <!-- abschnitt: prio=B; gewicht=1; readme=missing; cluster=connection-setup-18; features=device-add-update-sendto,info-device-online -->
-<!-- muss beantworten: Platzhalter für ein hinzugefügtes, nie erreichtes Gerät; Ursache IP/Schlüssel prüfen, danach löschen. -->
+<!-- muss beantworten: Platzhalter für ein hinzugefügtes, nie erreichtes Gerät; Adresse und Schlüssel im Reiter Geräte prüfen, danach löschen. -->
 
 *Dieser Abschnitt wird noch geschrieben.*
