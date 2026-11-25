@@ -24,7 +24,7 @@ Die häufigsten Fehlermeldungen und Verbindungsprobleme und was dagegen hilft.
 ## [Warum verbindet sich mein Gerät nicht oder bricht ab?](verbindung.md)
 
 - [Warum sind nach Neustart oder Update alle Geräte offline oder melden "incorrect password"?](verbindung.md#devices-offline-reporting-incorrect-password)
-- [Warum trennt sich das Gerät nach ESPHome 2025.10 alle paar Sekunden?](verbindung.md#device-disconnect-every-few-seconds)
+- [Warum trennt sich mein Gerät alle paar Sekunden?](verbindung.md#device-disconnect-every-few-seconds)
 - [Warum gibt es ein Gerät "Initialisation needed" im Objektbaum?](verbindung.md#device-initialisation-needed-object-tree)
 
 ## [Warum verhält sich die Admin-Oberfläche des Adapters falsch?](admin-oberflaeche.md)
