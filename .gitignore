@@ -11,5 +11,7 @@ docs/.vitepress/dist/
 docs/.vitepress/generated/
 docs/adapter/sourceanalytix/
 docs/adapter/wled/
+docs/adapter/esphome/
 docs/de/adapter/sourceanalytix/
 docs/de/adapter/wled/
+docs/de/adapter/esphome/

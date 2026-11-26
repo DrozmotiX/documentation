@@ -9,9 +9,9 @@ This repository is the **source and build** of the website, not the place where 
 
 | In this repository | Not in this repository |
 |---|---|
-| Site framework: VitePress config, navigation, theme, start page | Documentation of SourceAnalytix and WLED: it lives in `docs/` of each adapter repository |
+| Site framework: VitePress config, navigation, theme, start page | Documentation of SourceAnalytix, WLED and ESPHome: it lives in `docs/` of each adapter repository |
 | Overview and setup pages | The published website: it lives in [DrozmotiX/DrozmotiX.github.io](https://github.com/DrozmotiX/DrozmotiX.github.io) |
-| Adapter pages without their own docs yet (ESPHome, Tado, Klipper-Moonraker) | |
+| Adapter pages without their own docs yet (Tado, Klipper-Moonraker) | |
 | The list of adapter repositories to fetch ([`adapters.config.json`](adapters.config.json)) and the build that publishes the site | |
 
 > [!NOTE]
@@ -23,8 +23,8 @@ The site is built with [VitePress](https://vitepress.dev). It combines two kinds
 
 | Content | Where it lives | Edit it in |
 |---|---|---|
-| Overview and adapter pages not yet moved to their repository (ESPHome, Tado, Klipper-Moonraker) | `docs/` (English) and `docs/de/` (German) in this repository | this repository |
-| Adapter documentation for **SourceAnalytix** and **WLED** | `docs/<lang>/` in each adapter repository | the adapter repository |
+| Overview and adapter pages not yet moved to their repository (Tado, Klipper-Moonraker) | `docs/` (English) and `docs/de/` (German) in this repository | this repository |
+| Adapter documentation for **SourceAnalytix**, **WLED** and **ESPHome** | `docs/<lang>/` in each adapter repository | the adapter repository |
 
 Adapter documentation is **never copied by hand**. On every build, `scripts/sync-adapters.mjs` fetches `docs/de` and `docs/en`
 from the repositories listed in [`adapters.config.json`](adapters.config.json) and places them under `docs/[de/]adapter/<id>/`.
@@ -47,7 +47,7 @@ Old VuePress URLs (`/languages/<lang>/...`) redirect to the new pages via [`redi
 
 ```bash
 npm install
-npm run dev          # uses the adapter repos next to this folder (../ioBroker.sourceanalytix, ../ioBroker.wled)
+npm run dev          # uses the adapter repos next to this folder (../ioBroker.sourceanalytix, ../ioBroker.wled, ../ioBroker.esphome)
 npm run dev:remote   # fetches adapter docs from GitHub instead
 npm run build        # production build into docs/.vitepress/dist
 ```
