@@ -3,6 +3,20 @@
 We love to share and hope this site will help you find your way in realising your personal Smart Home solution.
 The site is published at [https://drozmotix.github.io](https://drozmotix.github.io).
 
+## What this repository is for
+
+This repository is the **source and build** of the website, not the place where adapter documentation is written.
+
+| In this repository | Not in this repository |
+|---|---|
+| Site framework: VitePress config, navigation, theme, start page | Documentation of SourceAnalytix and WLED: it lives in `docs/` of each adapter repository |
+| Overview and setup pages | The published website: it lives in [DrozmotiX/DrozmotiX.github.io](https://github.com/DrozmotiX/DrozmotiX.github.io) |
+| Adapter pages without their own docs yet (ESPHome, Tado, Klipper-Moonraker) | |
+| The list of adapter repositories to fetch ([`adapters.config.json`](adapters.config.json)) and the build that publishes the site | |
+
+> [!NOTE]
+> A change to an adapter's documentation does **not** create a commit here. The build fetches the adapter docs fresh each time and publishes the result to DrozmotiX.github.io. To check whether a change is online, look at the [Build & Deploy runs](https://github.com/DrozmotiX/documentation/actions/workflows/build-deploy.yml) and the commits in DrozmotiX.github.io.
+
 ## How it works
 
 The site is built with [VitePress](https://vitepress.dev). It combines two kinds of content:
